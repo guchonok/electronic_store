@@ -1,0 +1,20 @@
+{% extends 'mainapp/base.html' %}
+
+{% block title %}#Купи/#Продай{% endblock %}
+
+{% block content %}
+<div class="col-md-9" style="margin-left:100px;">
+    <div class="row" style="width: 1200px;">
+        {% for post in products %}
+            <div class="col-md-3 list_post">
+                <img class="show_pic" src="{{ post.photo.url }}" alt="logo">
+                <h4 class="post_title">{{ post.title }}</h4>
+                <p class="short_discript">{{ post.short_description }}</p>
+                <h5 class="post_cost">Цена: {{ post.cost }}р.</h5>
+                <h5 class="post_cost"><a href="show_post.html" class="post_url">Узнать подробности...</a></h5>
+            </div>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock %}

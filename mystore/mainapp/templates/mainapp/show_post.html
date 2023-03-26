@@ -1,0 +1,23 @@
+{% extends 'mainapp/base.html' %}
+
+{% block title %}#Купи/#Продай{% endblock %}
+
+{% block content %}
+<div class="col-md-9" style="margin-left:90px;">
+    <div class="content">
+        {% for post in products %}
+        <h4 class="post_title" style="font-size:32px; width:800px;">{{ post.title }}</h4>
+        <div style="width: 812px; border: 2px solid; border-radius: 10px; margin-bottom: 50px">
+            <img style="right:20px;width:808px; height:400px; border-radius:10px"
+                 src="{{ post.photo.url }}" alt="logo">
+            <div style="padding: 5px 20px">
+                <p class="short_discript" style="font-size:20px; width:760px; padding-top:20px;">{{ post.description }}</p>
+                <p style="font-size:24px; width:760px;">Стоимость: {{ post.cost }}р.</p>
+                <h4>Опубликовал: Дмитрий</h4>
+                <h5>Контактный телефон: 8(913)241-68-33</h5>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

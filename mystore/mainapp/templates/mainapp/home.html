@@ -1,0 +1,20 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+{% block title %}#Купи/#Продай{% endblock %}
+
+{% block content %}
+<div class="col-md-9" style="margin-left:90px;">
+    <div class="content">
+        <img style="right:20px;width:800px; height:400px; border-radius:10px" src="{% static 'mainapp/images/buy-sell.webp' %}"
+             alt="logo">
+        <div class="text">&nbsp;&nbsp;&nbsp;&nbsp;Сервис по скупке электронных товаров в Барнауле</div>
+        <p style="font-size:18px; width:800px;">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Мы предлагаем услуги по скупке ноутбуков и компьютеров в Барнауле
+            с 2014 года. Имея большой опыт работы, мы можем предложить лучшие условия выкупа ваших электронных гаджетов.
+            Вы можете выгодно продать нам свой ноутбук, компьютер, телефон, ЖК-монитор или телевизор. Мы рассматриваем
+            также предложения о продаже ноутбуков и компьютеров на запчасти. Хотите оценить свой ноутбук или компьютер?
+            Оставьте заявку на нашем сайте. Доступна услуга Trade-In - обмен Вашей техники на нашу с доплатой.
+        </p>
+    </div>
+</div>
+{% endblock %}
