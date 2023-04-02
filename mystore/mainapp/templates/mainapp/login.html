@@ -1,0 +1,29 @@
+{% extends 'mainapp/base.html' %}
+
+{% block content %}
+<div class="col-md-9" style="margin-left:100px;">
+    <div class="row" style="width: 600px;">
+        <h2 style="text-align:center;">Авторизация</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <br>
+            <label style="margin-left:-70px; margin-bottom:10px; font-size:24px;">Логин</label>
+            <input class="form-control" style="margin-left:-70px; width:33em;" type="text" placeholder="Введите логин" aria-label="Введите логин"
+                   name="username">
+            <br>
+            <label style="margin-left:-70px; margin-bottom:10px; font-size:24px;">Пароль</label>
+            <input class="form-control" style="margin-left:-70px; width:33em;" type="text" placeholder="Введите пароль" aria-label="Введите пароль"
+                   name="password">
+
+            <div class="col-md-11">
+                <br>
+                <button class="btn btn-primary w-100" style="margin-left:-70px; " type="submit">Авторизоваться</button>
+            </div>
+            <div class="mx-auto">
+                <p class="mb-0 mt-3" style="margin-left:-70px; font-size:24px;"><small class="text-dark mr-2">If you don't have an account</small> <a class="registr_bottom"
+                        href="{% url 'reg' %}" class="text-dark font-weight-bold">Registration</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

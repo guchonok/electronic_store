@@ -1,0 +1,9 @@
+{% for t in tags %}
+    <li style="display: block; text-align: center;">
+        {% if tag_selected == t.slug %}
+            <a style="color: #007cad;">{{ t.name|title }}</a>
+        {% else %}
+            <a href="{{ t.get_absolute_url }}">{{ t.name|title }}</a>
+        {% endif %}
+    </li>
+{% endfor %}
