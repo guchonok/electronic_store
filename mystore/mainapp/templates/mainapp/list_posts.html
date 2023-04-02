@@ -5,7 +5,7 @@
 {% block content %}
 <div class="col-md-9" style="margin-left:100px;">
     <div class="row" style="width: 1200px;">
-        {% for post in products %}
+        {% for post in page_obj.object_list %}
             <div class="col-md-3 list_post">
                 <img class="show_pic" src="{{ post.photo.url }}" alt="logo">
                 <h4 class="post_title">{{ post.title }}</h4>
@@ -18,3 +18,4 @@
     </div>
 </div>
 {% endblock %}
+{{ product }}

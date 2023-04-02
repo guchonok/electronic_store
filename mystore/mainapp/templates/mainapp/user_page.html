@@ -1,0 +1,50 @@
+{% extends 'mainapp/base.html' %}
+
+{% block content %}
+<div class="col-md-9" style="margin-left:90px;">
+    <div class="content">
+
+        <div style="width: 812px; border: 2px solid; border-radius: 10px; margin-bottom: 50px; padding-bottom: 4px">
+            <img class="rounded-circle account-img" style="width:90px; margin: 20px;"
+                 src="{{ user.profile.avatar.url }}">
+            <h4 class="post_title" style="font-size:32px; margin-top:-90px;">Профиль пользователя -
+                {{ profile.user.username }}</h4>
+
+            <div style="padding: 5px 20px">
+                <p class="short_discript" style="font-size:24px; width:760px; padding-top:20px; text-align:left;">
+                    {{ profile.surname }} {{ profile.name }}</p>
+                <p class="short_discript" style="font-size:24px; width:760px; text-align:left;">Адрес электронной почты:
+                    {{ user.email }} </p>
+                <p class="short_discript" style="font-size:24px; width:760px; text-align:left;">Контактный телефон: +7
+                   ({{profile.phone|slice:":3"}}) {{ profile.phone|slice:"3:" }} </p>
+                <p class="short_discript" style="font-size:24px; width:760px; text-align:left;">Заходил:
+                    {{ profile.user.last_login }} </p>
+
+                {% if request.user == profile.user %}
+                <a class="registr_bottom" href="{% url 'update_profile' request.user %}"> Обновить профиль</a>
+                <br>
+                    <a class="registr_bottom" href="{% url 'logout' %}">Выйти с аккаунта </a>
+                {% endif %}
+            </div>
+
+
+<!--            <form method="POST" enctype="multipart/form-data" style="left:0px;">-->
+<!--                {% csrf_token %}-->
+<!--                <fieldset class="form-group" style="width:600px; text-align:center;">-->
+<!--                    <legend class="border-bottom mb-4" style="margin-left:100px">Ваш профиль</legend>-->
+<!--                    {% for p in profile_form %}-->
+<!--                    <div style="margin-left:180px; font-size:24px;"><label class="form-label" for="f.id_for_label">-->
+<!--                        {{ p.label }}:</label>{{ p }}-->
+<!--                    </div>-->
+<!--                    <div class="form-error">{{ p.errors }}</div>-->
+<!--                    {% endfor %}-->
+<!--                </fieldset>-->
+<!--                <div class="form-group" style="margin:20px 300px; width: 200px;">-->
+<!--                    <button class="btn btn-primary w-100" type="submit">Обновить</button>-->
+<!--                </div>-->
+<!--            </form>-->
+
+        </div>
+    </div>
+</div>
+{% endblock %}

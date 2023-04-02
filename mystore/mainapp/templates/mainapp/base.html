@@ -1,4 +1,5 @@
 {% load static %}
+{% load mainapp_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +15,7 @@
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
             crossorigin="anonymous"></script>
@@ -35,12 +37,10 @@
                             Тэги
                         </button>
                         <ul class="dropdown-menu" style="background: #ced4da;">
-                            {% for t in tags %}
-                                <li style="display: block; text-align: center;"><a href="{{ t.get_absolute_url }}">{{ t.name|title }}</a></li>
-                            {% endfor %}
+                            {% show_tags tag_selected=tag_selected %}
                         </ul>
                     </div>
-               </li>
+                </li>
             </ul>
 
         </nav>
@@ -63,7 +63,12 @@
                         {% for m in menu %}
                         <li><a href="{% url m.url_name %}">{{ m.title }}</a></li>
                         {% endfor %}
-                        <li class="last"><a href="#">Личный кабинет</a></li>
+
+                        {% if user.is_authenticated %}
+                        <li class="last"><a href="{% url 'user_prof' request.user %}">ЛК: {{ user.username|title }}</a></li>
+                        {% else %}
+                        <li class="last"><a href="{% url 'login' %}">Авторизация</a></li>
+                        {% endif %}
                     </ul>
                 </nav>
             </div>
@@ -76,15 +81,7 @@
                 <button class="dropbtn">Категории</button>
                 <div class="dropdown-content">
 
-                    {% for cat in category %}
-
-                    {% if cat.slug == cat_selected %}
-                    <a class="active">{{ cat.name }}</a>
-                    {% else %}
-                    <a href="{{ cat.get_absolute_url }}">{{ cat.name }}</a>
-                    {% endif %}
-
-                    {% endfor %}
+                    {% show_categories cat_selected=cat_selected %}
 
                 </div>
             </div>
@@ -110,8 +107,8 @@
             <div class="col-md-2" style="left:50px;">
                 <div class="advert">
                     <h2 style="text-align:center; margin-top:-45px;">Реклама: </h2>
-                    <img style="right:20px;width:250px; height:150px; border-radius:10px"
-                         src="{% static 'mainapp/images/tanki.webp' %}" alt="logo">
+                    <img style="right:20px;width:250px; height:150px; border-radius:10px" src="{% static 'mainapp/images/tanki.webp' %}"
+                         alt="logo">
                     <a href="https://tanki.su/?new_layout=0"><h4 style="text-align:center; color: black;">World of
                         Tanks</h4></a>
                     <p style="text-align:center">Клиентская командная массовая многопользовательская онлайн-игра,
@@ -137,15 +134,8 @@
         </div>
     </div>
 
-    <div class="pagination_section">
-        <a href="#"><< Previous</a>
-        <a href="#">1</a>
-        <a href="#" class="active">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
-        <a href="#">Next >></a>
-    </div>
+    {% include 'mainapp/inc/pagination.html' with page_obj=page_obj %}
+
 </div>
 <footer>
     <hr style="margin-top: -10px; box-shadow: 0 0 10px 1px #000000;">
@@ -181,4 +171,5 @@
     </div>
 </footer>
 </body>
+
 </html>
