@@ -94,7 +94,6 @@ def login_user(request):
     return render(request, 'mainapp/login.html', {'menu': main_menu})
 
 
-@login_required
 def user_profile(request, profile_slug):
     user = User.objects.get(username=profile_slug)
     profile = Profile.objects.get(user=user)
@@ -124,6 +123,7 @@ def update_profile(request, profile_slug):
     return render(request, 'mainapp/update_profile.html', context=context)
 
 
+@login_required
 def sell_product(request, profile_slug):
     user = User.objects.get(username=profile_slug)
     profile = Profile.objects.get(user=user)
@@ -134,10 +134,10 @@ def sell_product(request, profile_slug):
             obj_author.author = profile
             obj_author.save()
             product = SellProduct()
-            return redirect('home')
+            return HttpResponseRedirect('/profile/' + str(profile) + '/list_posts/')
     else:
         product = SellProduct()
-    return render(request, 'mainapp/sell_product.html', {'product': product, 'menu': main_menu})
+    return render(request, 'mainapp/sell_product.html', {'product': product, 'menu': main_menu, 'profile': profile,})
 
 
 def user_post_product(request, profile_slug):

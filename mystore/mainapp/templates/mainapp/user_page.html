@@ -19,7 +19,7 @@
                     ({{profile.phone|slice:":3"}}) {{ profile.phone|slice:"3:" }} </p>
                 <p class="short_discript" style="font-size:24px; width:760px; text-align:left;">Заходил:
                     {{ profile.user.last_login }} </p>
-                <a class="registr_bottom" href="{% url 'user_post_product' profile.user %}"> Смотреть все публикации</a>
+                <a class="registr_bottom" href="{% url 'user_list_product' profile.user %}"> Смотреть все публикации</a>
                 <br>
                 {% if request.user == profile.user %}
                 <a class="registr_bottom" href="{% url 'update_profile' request.user %}"> Обновить профиль</a>
