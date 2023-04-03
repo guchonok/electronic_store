@@ -13,8 +13,13 @@
             <div style="padding: 5px 20px">
                 <p class="short_discript" style="font-size:20px; width:760px; padding-top:20px;">{{ post.description }}</p>
                 <p style="font-size:24px; width:760px;">Стоимость: {{ post.cost }}р.</p>
-                <h4>Опубликовал: Дмитрий</h4>
-                <h5>Контактный телефон: 8(913)241-68-33</h5>
+
+                {% if post.author != null %}
+                <h4>Опубликовал: <a class="post_url" href="{% url 'user_prof' post.author %}">{{ post.author }}</a></h4>
+
+                <h5>Контактный телефон: +7 ({{post.author.phone|slice:":3"}}) {{ post.author.phone|slice:"3:" }}</h5>
+                {% endif %}
+
             </div>
         </div>
         {% endfor %}

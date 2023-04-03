@@ -30,7 +30,8 @@ class LoginUserForm(AuthenticationForm):
     username = forms.CharField(label='Username',
                                widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'width: 250px;'}))
     password = forms.CharField(label='Password',
-                               widget=forms.PasswordInput(attrs={'class': 'form-control', 'style': 'width: 250px;'}))
+                               widget=forms.PasswordInput(attrs={'placeholder': '********', 'class': 'form-control',
+                                                                 'style': 'width: 250px;'}))
 
 
 class UpdateProfileForm(forms.ModelForm):
@@ -47,3 +48,19 @@ class UpdateProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['name', 'surname', 'phone', 'avatar']
+
+
+class SellProduct(forms.ModelForm):
+    class Meta:
+        model = Products
+        fields = ['title', 'description', 'short_description', 'cost', 'photo', 'category', 'tags', ]
+        widgets = {
+            'description': forms.Textarea(attrs={'class': 'form-control', 'cols': 60, 'rows': 10}),
+            'short_description': forms.Textarea(attrs={'class': 'form-control', 'cols': 60, 'rows': 4}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(SellProduct, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
+            visible.field.widget.attrs['style'] = 'width:42em; border: 3px solid; background:#ced4da;'

@@ -8,7 +8,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView
 
 from .models import Products, Category, Tags, Profile
-from .forms import RegistrationForm, LoginUserForm, UpdateProfileForm
+from .forms import RegistrationForm, LoginUserForm, UpdateProfileForm, SellProduct
 
 main_menu = [
     {'title': 'Гарантия', 'url_name': 'guarantee'},
@@ -28,6 +28,7 @@ def index(request):
 
 def show_post(request, post_slug):
     products = Products.objects.filter(slug=post_slug)
+
     context = {
         'products': products,
         'menu': main_menu,
@@ -45,7 +46,6 @@ def show_category(request, cat_slug):
     page_obj = paginator.get_page(page)
 
     context = {
-
         'menu': main_menu,
         'cat_selected': cat_slug,
         'page_obj': page_obj,
@@ -77,7 +77,7 @@ def registration(request):
             return HttpResponseRedirect('/login/')
     else:
         form = RegistrationForm()
-    return render(request, 'mainapp/registration.html', {'form': form})
+    return render(request, 'mainapp/registration.html', {'form': form, 'menu': main_menu})
 
 
 def login_user(request):
@@ -91,7 +91,7 @@ def login_user(request):
             return HttpResponseRedirect('/profile/' + username)
     else:
         redirect('home')
-    return render(request, 'mainapp/login.html', {})
+    return render(request, 'mainapp/login.html', {'menu': main_menu})
 
 
 @login_required
@@ -117,12 +117,44 @@ def update_profile(request, profile_slug):
     else:
         profile_form = UpdateProfileForm()
     context = {
-
         'profile': profile,
         'menu': main_menu,
         'profile_form': profile_form,
     }
     return render(request, 'mainapp/update_profile.html', context=context)
+
+
+def sell_product(request, profile_slug):
+    user = User.objects.get(username=profile_slug)
+    profile = Profile.objects.get(user=user)
+    if request.method == 'POST':
+        product = SellProduct(request.POST, request.FILES)
+        if product.is_valid():
+            obj_author = product.save(commit=False)
+            obj_author.author = profile
+            obj_author.save()
+            product = SellProduct()
+            return redirect('home')
+    else:
+        product = SellProduct()
+    return render(request, 'mainapp/sell_product.html', {'product': product, 'menu': main_menu})
+
+
+def user_post_product(request, profile_slug):
+    user = User.objects.get(username=profile_slug)
+    profile = Profile.objects.get(user=user)
+    products = Products.objects.filter(author=profile)
+
+    paginator = Paginator(products, 6)
+    page = request.GET.get('page')
+    page_obj = paginator.get_page(page)
+
+    context = {
+        'menu': main_menu,
+        'profile': profile,
+        'page_obj': page_obj,
+    }
+    return render(request, 'mainapp/list_posts.html', context=context)
 
 
 def logout_user(request):

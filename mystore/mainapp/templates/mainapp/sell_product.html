@@ -1,0 +1,36 @@
+{% extends 'mainapp/base.html' %}
+
+{% block content %}
+<div class="col-md-9" style="margin-left:90px;">
+    <div class="content">
+
+        <div style="width: 812px; border: 2px solid; border-radius: 10px; padding-bottom: 15px; margin-bottom: 50px;">
+            <h2 style="text-align:center;">Продать товар</h2>
+
+            <form method="post" enctype="multipart/form-data" style="width:600px;">
+                {% csrf_token %}
+                <br>
+                {% for p in product %}
+                <div class="col-md-10">
+                    <div class="form-group position-relative">
+                        <div style="margin-left:-100px; font-size:24px;  text-align:center;"><label class="form-label"
+
+                                                                                for="f.id_for_label">
+                            {{ p.label }}:</label>{{ p }}
+                        </div>
+                        <div class="form-error">{{ p.errors }}</div>
+                    </div>
+                </div>
+                <br>
+                {% endfor %}
+
+                <div class="col-md-11">
+                    <br>
+                    <button class="btn btn-primary w-100" style="margin-left:-40px;" type="submit">Опубликовать
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

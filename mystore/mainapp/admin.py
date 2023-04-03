@@ -3,7 +3,7 @@ from .models import *
 
 
 class ProductsAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'category', 'cost', 'photo', 'is_published')
+    list_display = ('id', 'title', 'category', 'cost', 'photo', 'is_published', 'author')
     list_display_links = ('id', 'title', 'category')
     search_fields = ('title', 'cost',)
     list_editable = ('is_published',)

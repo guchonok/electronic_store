@@ -15,7 +15,10 @@ urlpatterns = [
     path('tag/<slug:tag_slug>/', show_tag, name='tag'),
     path('profile/<slug:profile_slug>/', user_profile, name='user_prof'),
     path('profile/<slug:profile_slug>/update/', update_profile, name='update_profile'),
+    path('profile/<slug:profile_slug>/sell', sell_product, name='sell_product'),
+    path('profile/<slug:profile_slug>/list_posts', user_post_product, name='user_post_product'),
     path('registration/', registration, name='reg'),
     path('login/', login_user, name='login'),
     path('logout/', logout_user, name='logout'),
+
 ]

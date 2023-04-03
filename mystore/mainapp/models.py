@@ -39,29 +39,6 @@ class Tags(models.Model):
         return reverse('tag', kwargs={'tag_slug': self.slug})
 
 
-class Products(models.Model):
-    title = models.CharField(max_length=50, verbose_name='Заголовок')
-    description = models.TextField(verbose_name='Описание')
-    short_description = models.CharField(max_length=150, verbose_name='Краткое описание')
-    cost = models.IntegerField(verbose_name='Цена')
-    photo = models.ImageField(upload_to="prodacts/%Y/%m/%d/", verbose_name='Фото')
-    is_published = models.BooleanField(default=True, verbose_name='Опубликовано')
-    slug = models.SlugField(max_length=150, unique=True, db_index=True, verbose_name='URL')
-    category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.PROTECT, null=True)
-    tags = models.ManyToManyField(Tags, verbose_name='Тэги')
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = 'Товар'
-        verbose_name_plural = 'Товары'
-        ordering = ['title']
-
-    def get_absolute_url(self):
-        return reverse('post', kwargs={'post_slug': self.slug})
-
-
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     slug = models.SlugField(verbose_name='URL', blank=True, unique=True)
@@ -88,3 +65,32 @@ class Profile(models.Model):
 
     def get_absolute_url(self):
         return reverse('profile', kwargs={'profile_slug': self.slug})
+
+
+class Products(models.Model):
+    title = models.CharField(max_length=50, verbose_name='Заголовок')
+    description = models.TextField(verbose_name='Описание')
+    short_description = models.CharField(max_length=150, verbose_name='Краткое описание')
+    cost = models.IntegerField(verbose_name='Цена')
+    photo = models.ImageField(upload_to="prodacts/%Y/%m/%d/", verbose_name='Фото')
+    is_published = models.BooleanField(default=True, verbose_name='Опубликовано')
+    slug = models.SlugField(max_length=150, unique=True, db_index=True, verbose_name='URL')
+    category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.PROTECT, null=True)
+    tags = models.ManyToManyField(Tags, verbose_name='Тэги')
+    author = models.ForeignKey(Profile, verbose_name='Автор', on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Товар'
+        verbose_name_plural = 'Товары'
+        ordering = ['title']
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        return super(Products, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('post', kwargs={'post_slug': self.slug})

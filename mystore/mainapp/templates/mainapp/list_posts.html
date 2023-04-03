@@ -4,7 +4,12 @@
 
 {% block content %}
 <div class="col-md-9" style="margin-left:100px;">
+    {% if profile.user  %}
+        <h1 style="text-align:center; padding-bottom:20px;">Объявления пользователя: {{ profile.user }}</h1>
+    {% endif %}
     <div class="row" style="width: 1200px;">
+
+
         {% for post in page_obj.object_list %}
             <div class="col-md-3 list_post">
                 <img class="show_pic" src="{{ post.photo.url }}" alt="logo">

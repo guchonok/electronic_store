@@ -28,7 +28,9 @@
     <div id="top">
         <nav>
             <ul class="nav__social">
-                <li class="pull-right"><a href="#">Продать товар</a></li>
+                {% if user.is_authenticated %}
+                <li class="pull-right"><a href="{% url 'sell_product' request.user %}">Продать товар</a></li>
+                {% endif %}
                 <li class="pull-right"><a href="#">Купить</a></li>
                 <li class="pull-right">
                     <div class="btn-group dropstart">
